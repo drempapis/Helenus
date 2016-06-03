@@ -4,6 +4,8 @@
 
 # Helenus
 
+## Mission Statement
+
 ## How to Contribute
 
 
