@@ -28,4 +28,4 @@
  * @version $Id$
  * @since 0.1
  */
-package com.proemion.helenus;
+package com.proemion.helenus.cli;
