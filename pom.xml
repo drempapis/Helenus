@@ -47,4 +47,23 @@
             <url>https://github.com/Proemion/Helenus</url>
         </site>
     </distributionManagement>
+    <profiles>
+        <profile>
+            <id>qulice</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.qulice</groupId>
+                        <artifactId>qulice-maven-plugin</artifactId>
+                        <version>0.16.4</version>
+                        <configuration>
+                            <excludes combine.children="append">
+                                <exclude>checkstyle:/src/site/resources/.*</exclude>
+                            </excludes>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
