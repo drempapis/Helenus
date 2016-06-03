@@ -11,4 +11,11 @@ env:
     - MAVEN_OPTS="-Xms4g -Xmx4g"
     - JAVA_OPTS="-Xms4g -Xmx4g"
 
+before_install:
+ - |
+   if [ "$TRAVIS_OS_NAME" = "osx" ]
+   then
+     export JAVA_HOME="$(/usr/libexec/java_home)"
+   fi
+
 script: mvn clean verify -Pqulice
