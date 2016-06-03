@@ -22,4 +22,23 @@
             <distribution>site</distribution>
         </license>
     </licenses>
+    <developers>
+        <developer>
+            <id>1</id>
+            <name>Armin Braun</name>
+            <email>armin.braun@proemion.com</email>
+            <organization>Proemion</organization>
+            <organizationUrl>http://www.proemion.com</organizationUrl>
+            <roles>
+                <role>Architect</role>
+                <role>Developer</role>
+            </roles>
+            <timezone>+1</timezone>
+        </developer>
+    </developers>
+    <scm>
+        <connection>scm:git:git@github.com:proemion/Helenus.git</connection>
+        <developerConnection>scm:git:git@github.com:proemion/Helenus.git</developerConnection>
+        <url>https://github.com/Proemion/Helenus</url>
+    </scm>
 </project>
