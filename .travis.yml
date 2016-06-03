@@ -1,0 +1,20 @@
+language: java
+sudo: false
+os:
+  - linux
+  - osx
+cache:
+  directories:
+    - $HOME/.m2
+jdk:
+  - oraclejdk8
+  - oraclejdk7
+  - openjdk8
+  - openjdk7
+
+env:
+  global:
+    - MAVEN_OPTS="-Xms4g -Xmx4g"
+    - JAVA_OPTS="-Xms4g -Xmx4g"
+
+script: mvn clean verify -Pqulice
