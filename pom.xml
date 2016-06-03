@@ -41,4 +41,10 @@
         <developerConnection>scm:git:git@github.com:proemion/Helenus.git</developerConnection>
         <url>https://github.com/Proemion/Helenus</url>
     </scm>
+    <distributionManagement>
+        <site>
+            <id>github-pages</id>
+            <url>https://github.com/Proemion/Helenus</url>
+        </site>
+    </distributionManagement>
 </project>
