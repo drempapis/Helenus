@@ -3,3 +3,7 @@
 [![Dependency Status](https://www.versioneye.com/user/projects/57518e987757a00041b3a144/badge.svg?style=flat)](https://www.versioneye.com/user/projects/57518e987757a00041b3a144)
 
 # Helenus
+
+## How to Contribute
+
+
