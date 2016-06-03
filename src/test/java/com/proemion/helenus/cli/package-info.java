@@ -22,34 +22,10 @@
  * SOFTWARE.
  */
 
-package com.proemion.helenus.cli;
-
-import com.jcabi.log.Logger;
-
 /**
- * Cli Entry Point.
+ * Helenus.
  * @author Armin Braun (armin.braun@proemion.com)
  * @version $Id$
  * @since 0.1
  */
-public final class App {
-
-    /**
-     * Ctor.
-     */
-    private App() {
-        //hidden
-    }
-
-    /**
-     * Entry Point.
-     * @param args Cli arguments
-     */
-    public static void main(final String... args) {
-        if (args.length == 0) {
-            throw new IllegalArgumentException("No config file provided!");
-        } else {
-            Logger.info(App.class, "Not Implemented.");
-        }
-    }
-}
+package com.proemion.helenus.cli;

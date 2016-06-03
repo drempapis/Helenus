@@ -24,32 +24,32 @@
 
 package com.proemion.helenus.cli;
 
-import com.jcabi.log.Logger;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 /**
- * Cli Entry Point.
+ * Tests for {@link App}.
  * @author Armin Braun (armin.braun@proemion.com)
  * @version $Id$
  * @since 0.1
  */
-public final class App {
+public final class AppTest {
 
     /**
-     * Ctor.
+     * JUnit rule for expected exception.
      */
-    private App() {
-        //hidden
-    }
+    @Rule
+    public final transient ExpectedException thrown = ExpectedException.none();
 
     /**
-     * Entry Point.
-     * @param args Cli arguments
+     * Main can throw on missing config file.
+     * @throws Exception On failure
      */
-    public static void main(final String... args) {
-        if (args.length == 0) {
-            throw new IllegalArgumentException("No config file provided!");
-        } else {
-            Logger.info(App.class, "Not Implemented.");
-        }
+    @Test
+    public void mainThrowsOnMissingConfig() throws Exception {
+        this.thrown.expect(IllegalArgumentException.class);
+        App.main();
     }
+
 }
