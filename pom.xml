@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.proemion</groupId>
     <artifactId>Helenus</artifactId>
@@ -11,6 +11,10 @@
         <artifactId>parent</artifactId>
         <version>0.43</version>
     </parent>
+    <properties>
+        <parent.version>0.43</parent.version>
+        <project.version>1.0-SNAPSHOT</project.version>
+    </properties>
     <organization>
         <name>Helenus</name>
         <url>https://github.com/Proemion/Helenus</url>
@@ -98,8 +102,10 @@
                                 </goals>
                                 <configuration>
                                     <repoToken>${env.COVERALLS_TOKEN}</repoToken>
-                                    <failOnServiceError>false</failOnServiceError>
-                                    <timestampFormat>yyyy-MM-dd'T'HH:mm:ss</timestampFormat>
+                                    <failOnServiceError>false
+                                    </failOnServiceError>
+                                    <timestampFormat>yyyy-MM-dd'T'HH:mm:ss
+                                    </timestampFormat>
                                 </configuration>
                             </execution>
                         </executions>
@@ -132,9 +138,37 @@
             <artifactId>lombok</artifactId>
             <version>1.16.8</version>
         </dependency>
+        <dependency>
+            <groupId>com.datastax.cassandra</groupId>
+            <artifactId>cassandra-driver-core</artifactId>
+            <version>3.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.cassandra</groupId>
+            <artifactId>cassandra-all</artifactId>
+            <version>3.5</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <artifactId>log4j-over-slf4j</artifactId>
+                    <groupId>org.slf4j</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>jcl-over-slf4j</artifactId>
+                    <groupId>org.slf4j</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
