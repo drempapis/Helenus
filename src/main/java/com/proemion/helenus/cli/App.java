@@ -25,6 +25,10 @@
 package com.proemion.helenus.cli;
 
 import com.jcabi.log.Logger;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
 
 /**
  * Cli Entry Point.
@@ -35,21 +39,68 @@ import com.jcabi.log.Logger;
 public final class App {
 
     /**
-     * Ctor.
+     * Cassandra Host Cli Argument.
      */
-    private App() {
-        //hidden
+    private static final String CASSANDRA = "cassandra_host";
+
+    /**
+     * Migrations Directory Cli Argument.
+     */
+    private static final String MIGRATIONS = "migration_dir";
+
+    /**
+     * Cli Option Definitions.
+     */
+    private static final Options OPTIONS = new Options()
+        .addOption("c", App.CASSANDRA, true, "Cassandra Host")
+        .addOption("m", App.MIGRATIONS, true, "Migrations Directory");
+
+    /**
+     * Parsed CLI Arguments.
+     */
+    private final CommandLine cli;
+
+    /**
+     * Ctor.
+     * @param args Cli arguments
+     * @throws ParseException On failure
+     */
+    private App(final String... args) throws ParseException {
+        this.cli = new DefaultParser().parse(App.OPTIONS, args);
     }
 
     /**
      * Entry Point.
      * @param args Cli arguments
+     * @throws Exception On failure
      */
-    public static void main(final String... args) {
-        if (args.length == 0) {
-            throw new IllegalArgumentException("No config file provided!");
+    public static void main(final String... args) throws Exception {
+        new App(args).exec();
+    }
+
+    /**
+     * Run the application.
+     */
+    private void exec() {
+        if (this.cli.hasOption(App.CASSANDRA)) {
+            if (this.cli.hasOption(App.MIGRATIONS)) {
+                Logger.info(App.class, "Not Implemented.");
+            } else {
+                throw App.missing(App.MIGRATIONS);
+            }
         } else {
-            Logger.info(App.class, "Not Implemented.");
+            throw App.missing(App.CASSANDRA);
         }
+    }
+
+    /**
+     * Builds IllegalArgumentException for missing cli argument.
+     * @param arg Argument missing
+     * @return Exception for missing argument
+     */
+    private static IllegalArgumentException missing(final String arg) {
+        return new IllegalArgumentException(
+            String.format("Argument %s missing!", arg)
+        );
     }
 }

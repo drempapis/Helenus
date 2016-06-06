@@ -43,13 +43,25 @@ public final class AppTest {
     public final transient ExpectedException thrown = ExpectedException.none();
 
     /**
-     * Main can throw on missing config file.
+     * Main can throw on missing Cassandra host.
      * @throws Exception On failure
      */
     @Test
-    public void mainThrowsOnMissingConfig() throws Exception {
+    public void mainThrowsOnMissingCassandraHost() throws Exception {
         this.thrown.expect(IllegalArgumentException.class);
+        this.thrown.expectMessage("Argument cassandra_host missing!");
         App.main();
+    }
+
+    /**
+     * Main can throw on missing migrations directory.
+     * @throws Exception On failure
+     */
+    @Test
+    public void mainThrowsOnMissingMigrationsDir() throws Exception {
+        this.thrown.expect(IllegalArgumentException.class);
+        this.thrown.expectMessage("Argument migration_dir missing!");
+        App.main("--cassandra_host", "somehost");
     }
 
 }
