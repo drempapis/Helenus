@@ -16,6 +16,7 @@
         <project.version>1.0-SNAPSHOT</project.version>
         <qulice.version>0.16.5</qulice.version>
         <exec-maven-plugin.version>1.5.0</exec-maven-plugin.version>
+        <maven-shade-plugin.version>2.4.3</maven-shade-plugin.version>
     </properties>
     <organization>
         <name>Helenus</name>
@@ -157,6 +158,16 @@
                     <pomIncludes>
                         <pomInclude>from-scratch/pom.xml</pomInclude>
                     </pomIncludes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>${maven-shade-plugin.version}</version>
+                <configuration>
+                    <keepDependenciesWithProvidedScope>true</keepDependenciesWithProvidedScope>
+                    <createDependencyReducedPom>false</createDependencyReducedPom>
+                    <shadedArtifactAttached>true</shadedArtifactAttached>
                 </configuration>
             </plugin>
             <plugin>
