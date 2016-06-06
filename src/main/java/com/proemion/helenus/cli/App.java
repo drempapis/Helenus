@@ -46,14 +46,14 @@ public final class App {
     /**
      * Migrations Directory Cli Argument.
      */
-    private static final String MIGRATIONS = "migration_dir";
+    private static final String MIGRATIONS = "migration_package";
 
     /**
      * Cli Option Definitions.
      */
     private static final Options OPTIONS = new Options()
         .addOption("c", App.CASSANDRA, true, "Cassandra Host")
-        .addOption("m", App.MIGRATIONS, true, "Migrations Directory");
+        .addOption("m", App.MIGRATIONS, true, "Migrations Package");
 
     /**
      * Parsed CLI Arguments.

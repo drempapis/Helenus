@@ -60,7 +60,7 @@ public final class AppTest {
     @Test
     public void mainThrowsOnMissingMigrationsDir() throws Exception {
         this.thrown.expect(IllegalArgumentException.class);
-        this.thrown.expectMessage("Argument migration_dir missing!");
+        this.thrown.expectMessage("Argument migration_package missing!");
         App.main("--cassandra_host", "somehost");
     }
 
