@@ -14,6 +14,7 @@
     <properties>
         <parent.version>0.43</parent.version>
         <project.version>1.0-SNAPSHOT</project.version>
+        <qulice.version>0.16.5</qulice.version>
     </properties>
     <organization>
         <name>Helenus</name>
@@ -59,7 +60,7 @@
                     <plugin>
                         <groupId>com.qulice</groupId>
                         <artifactId>qulice-maven-plugin</artifactId>
-                        <version>0.16.5</version>
+                        <version>${qulice.version}</version>
                         <configuration>
                             <excludes combine.children="append">
                                 <exclude>checkstyle:/src/site/resources/.*</exclude>
