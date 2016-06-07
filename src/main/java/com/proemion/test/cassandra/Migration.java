@@ -24,6 +24,9 @@
 
 package com.proemion.test.cassandra;
 
+import com.datastax.driver.core.Session;
+import java.util.Date;
+
 /**
  * A Cassandra Schema Migration.
  * @author Armin Braun (armin.braun@proemion.com)
@@ -48,4 +51,76 @@ public interface Migration {
      * @return True if migration has finished sucessfully
      */
     boolean finished();
+
+    /**
+     * Creates a Keyspace.
+     */
+    final class CreateKeyspace implements Migration {
+
+        /**
+         * Cassandra Session.
+         */
+        private final Session session;
+
+        /**
+         * Keyspace to work on.
+         */
+        private final String keyspace;
+
+        /**
+         * Identifier.
+         */
+        private final long ident;
+
+        /**
+         * Ctor.
+         * @param connection Cassandra session
+         * @param kyspace Keyspace
+         */
+        public CreateKeyspace(
+            final Session connection, final String kyspace
+        ) {
+            this(connection, kyspace, new Date().getTime());
+        }
+
+        /**
+         * Ctor.
+         * @param connection Cassandra session
+         * @param kyspace Keyspace
+         * @param identif Long identifier
+         */
+        public CreateKeyspace(
+            final Session connection, final String kyspace, final long identif
+        ) {
+            this.session = connection;
+            this.keyspace = kyspace;
+            this.ident = identif;
+        }
+
+        @Override
+        public void run() {
+            this.session.execute(
+                String.format(
+                    String.join(
+                        " ",
+                        "CREATE KEYSPACE %s WITH replication =",
+                        "{'class':'SimpleStrategy', 'replication_factor': '1'}",
+                        "AND durable_writes = true"
+                    ),
+                    this.keyspace
+                )
+            );
+        }
+
+        @Override
+        public long identifier() {
+            return this.ident;
+        }
+
+        @Override
+        public boolean finished() {
+            return new Check.KeyspaceExists(this.session, this.keyspace)
+                .fulfilled();
+        }
+    }
 }

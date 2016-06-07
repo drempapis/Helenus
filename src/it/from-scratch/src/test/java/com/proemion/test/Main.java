@@ -26,6 +26,7 @@ package com.proemion.test;
 import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.Session;
 import com.proemion.test.cassandra.Check;
+import com.proemion.test.cassandra.Migration;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 
@@ -55,9 +56,15 @@ public final class Main {
             final Cluster cluster = Cluster.builder().withPort(cport).build();
             final Session session = cluster.connect()
         ) {
+            final String keyspace = "keyspace";
             MatcherAssert.assertThat(
-                new Check.KeyspaceExists(session, "keyspace").fulfilled(),
+                new Check.KeyspaceExists(session, keyspace).fulfilled(),
                 Matchers.is(false)
+            );
+            new Migration.CreateKeyspace(session, keyspace).run();
+            MatcherAssert.assertThat(
+                new Check.KeyspaceExists(session, keyspace).fulfilled(),
+                Matchers.is(true)
             );
         }
     }
