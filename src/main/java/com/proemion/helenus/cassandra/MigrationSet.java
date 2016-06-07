@@ -21,47 +21,55 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package com.proemion.helenus.cassandra;
 
-package com.proemion.helenus.cli;
-
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 /**
- * Tests for {@link App}.
+ * Multiple Migrations.
  * @author Armin Braun (armin.braun@proemion.com)
  * @version $Id$
  * @since 0.1
  */
-public final class AppTest {
+public final class MigrationSet implements Migration {
 
     /**
-     * JUnit rule for expected exception.
+     * Migrations to run.
      */
-    @Rule
-    public final transient ExpectedException thrown = ExpectedException.none();
+    private final List<Migration> migrations;
 
     /**
-     * Main can throw on missing Cassandra host.
-     * @throws Exception On failure
+     * Ctor.
+     * @param runs Migrations to run
      */
-    @Test
-    public void mainThrowsOnMissingCassandraHost() throws Exception {
-        this.thrown.expect(IllegalArgumentException.class);
-        this.thrown.expectMessage("Argument cassandra_host missing!");
-        App.main();
+    public MigrationSet(final Collection<Migration> runs) {
+        this.migrations = new ArrayList<>(runs);
     }
 
-    /**
-     * Main can throw on missing migrations directory.
-     * @throws Exception On failure
-     */
-    @Test
-    public void mainThrowsOnMissingMigrationsDir() throws Exception {
-        this.thrown.expect(IllegalArgumentException.class);
-        this.thrown.expectMessage("Argument migration_class missing!");
-        App.main("--cassandra_host", "somehost");
+    @Override
+    public void run() {
+        Collections.sort(
+            this.migrations,
+            (first, second) -> Long.compare(
+                first.identifier(), second.identifier()
+            )
+        );
     }
 
+    @Override
+    public long identifier() {
+        long max = 0L;
+        for (final Migration migration : this.migrations) {
+            max = Math.max(migration.identifier(), max);
+        }
+        return max;
+    }
+
+    @Override
+    public boolean finished() {
+        return false;
+    }
 }

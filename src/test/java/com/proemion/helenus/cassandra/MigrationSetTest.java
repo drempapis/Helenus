@@ -21,47 +21,44 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package com.proemion.helenus.cassandra;
 
-package com.proemion.helenus.cli;
-
-import org.junit.Rule;
+import com.jcabi.aspects.Tv;
+import java.util.ArrayList;
+import java.util.Collection;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.mockito.Mockito;
 
 /**
- * Tests for {@link App}.
+ * Tests for {@link MigrationSet}.
  * @author Armin Braun (armin.braun@proemion.com)
  * @version $Id$
  * @since 0.1
  */
-public final class AppTest {
+public final class MigrationSetTest {
 
     /**
-     * JUnit rule for expected exception.
-     */
-    @Rule
-    public final transient ExpectedException thrown = ExpectedException.none();
-
-    /**
-     * Main can throw on missing Cassandra host.
+     * {@link MigrationSet} can share the highest identifier found in its member
+     * migrations.
      * @throws Exception On failure
      */
     @Test
-    public void mainThrowsOnMissingCassandraHost() throws Exception {
-        this.thrown.expect(IllegalArgumentException.class);
-        this.thrown.expectMessage("Argument cassandra_host missing!");
-        App.main();
+    public void sharesHighestMemberIdentifier() throws Exception {
+        final Collection<Migration> migrations = new ArrayList<>(3);
+        final Migration first = Mockito.mock(Migration.class);
+        Mockito.when(first.identifier()).thenReturn((long) Tv.FIFTY);
+        final Migration second = Mockito.mock(Migration.class);
+        Mockito.when(second.identifier()).thenReturn((long) Tv.THOUSAND);
+        final Migration third = Mockito.mock(Migration.class);
+        Mockito.when(third.identifier()).thenReturn((long) Tv.HUNDRED);
+        migrations.add(first);
+        migrations.add(second);
+        migrations.add(third);
+        MatcherAssert.assertThat(
+            new MigrationSet(migrations).identifier(),
+            Matchers.is((long) Tv.THOUSAND)
+        );
     }
-
-    /**
-     * Main can throw on missing migrations directory.
-     * @throws Exception On failure
-     */
-    @Test
-    public void mainThrowsOnMissingMigrationsDir() throws Exception {
-        this.thrown.expect(IllegalArgumentException.class);
-        this.thrown.expectMessage("Argument migration_class missing!");
-        App.main("--cassandra_host", "somehost");
-    }
-
 }
