@@ -320,6 +320,11 @@
             <artifactId>cassandra-driver-core</artifactId>
             <version>${datastax.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>19.0</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

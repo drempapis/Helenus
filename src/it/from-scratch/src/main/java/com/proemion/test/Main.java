@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.proemion.helenus;
+package com.proemion.test;
 
 import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.Session;
@@ -54,10 +54,11 @@ public final class Main {
     public static void main(final String... args) throws Exception {
         final int cport = Integer.parseInt(args[0]);
         try (
-            final Cluster cluster = Cluster.builder().withPort(cport).build();
+            final Cluster cluster = Cluster.builder()
+                .addContactPoint("localhost").withPort(cport).build();
             final Session session = cluster.connect()
         ) {
-            final String keyspace = "keyspace";
+            final String keyspace = "keyyspace";
             MatcherAssert.assertThat(
                 new Check.KeyspaceExists(session, keyspace).fulfilled(),
                 Matchers.is(false)

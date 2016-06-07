@@ -6,6 +6,7 @@
     <groupId>com.proemion</groupId>
     <artifactId>Helenus-From-Scratch</artifactId>
     <version>@project.version@</version>
+    <packaging>jar</packaging>
     <parent>
         <groupId>com.jcabi</groupId>
         <artifactId>parent</artifactId>
@@ -13,10 +14,17 @@
     </parent>
     <dependencies>
         <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-library</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.proemion</groupId>
             <artifactId>Helenus</artifactId>
             <version>@project.version@</version>
-            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.cassandra</groupId>
@@ -53,6 +61,7 @@
                             <excludes>
                                 <exclude>duplicatefinder:.*</exclude>
                                 <exclude>xml:.*</exclude>
+                                <exclude>findbugs:.*</exclude>
                             </excludes>
                         </configuration>
                     </plugin>
@@ -93,6 +102,19 @@
                     <execution>
                         <goals>
                             <goal>properties</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>2.19.1</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
                         </goals>
                     </execution>
                 </executions>

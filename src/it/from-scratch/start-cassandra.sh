@@ -24,7 +24,7 @@ export CASSANDRA_ADDRESS="127.0.0.1"
 CASSANDRA_DATA_DIR="cassandra-data"
 mkdir -p "${CASSANDRA_DATA_DIR}"
 CASSANDRA_PORT=9042
-java  -Dcassandra.config="file:///${PWD}/src/helenus/resources/conf/cassandra.yaml" \
+java  -Dcassandra.config="file:///${PWD}/src/main/resources/conf/cassandra.yaml" \
     -Dcassandra.storagedir="${CASSANDRA_DATA_DIR}" -cp 'target/Helenus-From-Scratch-1.0-SNAPSHOT-jar-with-dependencies.jar:*' \
     org.apache.cassandra.service.CassandraDaemon &
 echo $! > "cassandra.pid"

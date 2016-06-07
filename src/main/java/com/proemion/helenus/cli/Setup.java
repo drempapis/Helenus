@@ -25,6 +25,7 @@
 package com.proemion.helenus.cli;
 
 import com.datastax.driver.core.Session;
+import com.google.common.base.Optional;
 import com.proemion.helenus.cassandra.Migration;
 
 /**
@@ -76,15 +77,9 @@ public final class Setup implements Migration {
 
     @Override
     public boolean finished() {
-        return this.session.execute(
-            String.join(
-                "",
-                "SELECT helenus_migrations",
-                String.format(
-                    "FROM system_schema.tables WHERE keyspace_name='%s';",
-                    this.keyspace
-                )
-            )
-        ).getAvailableWithoutFetching() == 1;
+        return Optional.fromNullable(
+            this.session.getCluster().getMetadata().getKeyspace(this.keyspace)
+                .getTable("helenus_schema_migrations")
+        ).isPresent();
     }
 }
