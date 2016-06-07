@@ -11,6 +11,7 @@
         <artifactId>parent</artifactId>
         <version>0.43</version>
     </parent>
+    <url>http://proemion.github.io/Helenus</url>
     <name>helenus</name>
     <packaging>jar</packaging>
     <description>Cassandra Schema Migration Library and CLI Tool</description>
