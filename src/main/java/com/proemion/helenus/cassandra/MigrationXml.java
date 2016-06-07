@@ -22,10 +22,47 @@
  * SOFTWARE.
  */
 
+package com.proemion.helenus.cassandra;
+
+import com.jcabi.xml.XML;
+import lombok.EqualsAndHashCode;
+
 /**
- * Helenus Test Package.
+ * Migration read from XML file.
  * @author Armin Braun (armin.braun@proemion.com)
  * @version $Id$
  * @since 0.1
  */
-package com.proemion.test.test;
+@EqualsAndHashCode
+public final class MigrationXml implements Migration {
+
+    /**
+     * Xml from which to read.
+     */
+    private final XML data;
+
+    /**
+     * Ctor.
+     * @param xml Xml to read
+     */
+    public MigrationXml(final XML xml) {
+        this.data = xml;
+    }
+
+    @Override
+    public void run() {
+        //missing implementation.
+    }
+
+    @Override
+    public long identifier() {
+        return Long.parseLong(
+            this.data.xpath("/migration/identifier/text()").iterator().next()
+        );
+    }
+
+    @Override
+    public boolean finished() {
+        return false;
+    }
+}

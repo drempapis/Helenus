@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.proemion.test.cli;
+package com.proemion.helenus.cli;
 
 import com.jcabi.log.Logger;
 import org.apache.commons.cli.CommandLine;

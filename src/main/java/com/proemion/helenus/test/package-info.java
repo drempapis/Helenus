@@ -23,9 +23,9 @@
  */
 
 /**
- * Helenus.
+ * Helenus Test Package.
  * @author Armin Braun (armin.braun@proemion.com)
  * @version $Id$
  * @since 0.1
  */
-package com.proemion.test.cli;
+package com.proemion.helenus.test;

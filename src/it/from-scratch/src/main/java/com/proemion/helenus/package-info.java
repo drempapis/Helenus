@@ -21,45 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.proemion.test.cassandra;
-
-import com.jcabi.xml.XMLDocument;
-import java.io.File;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
 
 /**
- * Tests for {@link MigrationXml}.
+ * Helenus Test.
  * @author Armin Braun (armin.braun@proemion.com)
  * @version $Id$
  * @since 0.1
  */
-public final class MigrationXmlTest {
-
-    /**
-     * {@link MigrationXml} can read identifier from Xml.
-     * @throws Exception On Failure
-     */
-    @Test
-    public void identifierIsReadFromXml() throws Exception {
-        MatcherAssert.assertThat(
-            new MigrationXml(
-                new XMLDocument(
-                    new String(
-                        Files.readAllBytes(
-                            new File(
-                                MigrationXmlTest.class
-                                    .getResource("CreateKeyspace.xml").getFile()
-                            ).toPath()
-                        ), StandardCharsets.UTF_8
-                    )
-                )
-            ).identifier(),
-            // @checkstyle MagicNumberCheck (1 line)
-            Matchers.is(1465204980295L)
-        );
-    }
-}
+package com.proemion.helenus;

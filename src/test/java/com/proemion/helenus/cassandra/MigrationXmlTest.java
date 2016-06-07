@@ -21,48 +21,45 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package com.proemion.helenus.cassandra;
 
-package com.proemion.test.cassandra;
-
-import com.jcabi.xml.XML;
-import lombok.EqualsAndHashCode;
+import com.jcabi.xml.XMLDocument;
+import java.io.File;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Migration read from XML file.
+ * Tests for {@link MigrationXml}.
  * @author Armin Braun (armin.braun@proemion.com)
  * @version $Id$
  * @since 0.1
  */
-@EqualsAndHashCode
-public final class MigrationXml implements Migration {
+public final class MigrationXmlTest {
 
     /**
-     * Xml from which to read.
+     * {@link MigrationXml} can read identifier from Xml.
+     * @throws Exception On Failure
      */
-    private final XML data;
-
-    /**
-     * Ctor.
-     * @param xml Xml to read
-     */
-    public MigrationXml(final XML xml) {
-        this.data = xml;
-    }
-
-    @Override
-    public void run() {
-        //missing implementation.
-    }
-
-    @Override
-    public long identifier() {
-        return Long.parseLong(
-            this.data.xpath("/migration/identifier/text()").iterator().next()
+    @Test
+    public void identifierIsReadFromXml() throws Exception {
+        MatcherAssert.assertThat(
+            new MigrationXml(
+                new XMLDocument(
+                    new String(
+                        Files.readAllBytes(
+                            new File(
+                                MigrationXmlTest.class
+                                    .getResource("CreateKeyspace.xml").getFile()
+                            ).toPath()
+                        ), StandardCharsets.UTF_8
+                    )
+                )
+            ).identifier(),
+            // @checkstyle MagicNumberCheck (1 line)
+            Matchers.is(1465204980295L)
         );
-    }
-
-    @Override
-    public boolean finished() {
-        return false;
     }
 }

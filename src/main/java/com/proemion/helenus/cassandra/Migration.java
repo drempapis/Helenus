@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.proemion.test.cassandra;
+package com.proemion.helenus.cassandra;
 
 import com.datastax.driver.core.Session;
 import java.util.Date;

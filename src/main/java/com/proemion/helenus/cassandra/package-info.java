@@ -28,4 +28,4 @@
  * @version $Id$
  * @since 0.1
  */
-package com.proemion.test.cassandra;
+package com.proemion.helenus.cassandra;

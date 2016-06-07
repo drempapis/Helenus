@@ -22,45 +22,10 @@
  * SOFTWARE.
  */
 
-package com.proemion.test.test;
-
-import java.io.IOException;
-import java.net.InetAddress;
-import java.net.InetSocketAddress;
-import java.net.ServerSocket;
-
 /**
- * Reserves a random port on the loopback interface.
+ * Helenus.
  * @author Armin Braun (armin.braun@proemion.com)
  * @version $Id$
  * @since 0.1
  */
-public final class RandomPort {
-
-    /**
-     * Ctor.
-     */
-    private RandomPort() {
-        //Utility only.
-    }
-
-    /**
-     * Reserves a random port on the loopback interface.
-     * @return Port
-     */
-    @SuppressWarnings("PMD.ProhibitPublicStaticMethods")
-    public static int reserve() {
-        synchronized (RandomPort.class) {
-            try (ServerSocket socket = new ServerSocket()) {
-                socket.setReuseAddress(true);
-                socket.bind(
-                    new InetSocketAddress(InetAddress.getLoopbackAddress(), 0)
-                );
-                return socket.getLocalPort();
-            } catch (final IOException ex) {
-                throw new IllegalStateException(ex);
-            }
-        }
-    }
-
-}
+package com.proemion.helenus.cli;

@@ -22,10 +22,10 @@
  * SOFTWARE.
  */
 
-package com.proemion.test.cli;
+package com.proemion.helenus.cli;
 
 import com.datastax.driver.core.Session;
-import com.proemion.test.cassandra.Migration;
+import com.proemion.helenus.cassandra.Migration;
 
 /**
  * Setup Cli Workflow.
@@ -59,9 +59,11 @@ public final class Setup implements Migration {
     public void run() {
         if (this.finished()) {
             throw new IllegalStateException(
-                String.join(
-                    " ", "Setup on keyspace %s attempted,",
-                    "but %s already contains a migration tracking table!"
+                String.format(
+                    String.join(
+                        " ", "Setup on keyspace %s attempted,",
+                        "but %s already contains a migration tracking table!"
+                    ), this.keyspace, this.keyspace
                 )
             );
         }

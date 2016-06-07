@@ -21,32 +21,56 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.proemion.test.cli;
+package com.proemion.helenus;
 
+import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.Session;
+import com.proemion.helenus.cassandra.Check;
+import com.proemion.helenus.cassandra.Migration;
+import com.proemion.helenus.cli.Setup;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Test;
-import org.mockito.Mockito;
 
 /**
- * Tests for {@link Setup}.
+ * Setup and Subsequent Schema Bootstrap Test.
  * @author Armin Braun (armin.braun@proemion.com)
  * @version $Id$
  * @since 0.1
  */
-public final class SetupTest {
+public final class Main {
 
     /**
-     * {@link Setup} can have identifier 1.
-     * @throws Exception On Failure
+     * Ctor.
      */
-    @Test
-    public void identifierIsOne() throws Exception {
-        MatcherAssert.assertThat(
-            new Setup(Mockito.mock(Session.class), "ks").identifier(),
-            Matchers.is(1L)
-        );
+    private Main() {
+        // Just an EntryPoint.
     }
 
+    /**
+     * Helenus can setup a Schema from scratch.
+     * @param args Cli Args
+     * @throws Exception On failure
+     */
+    public static void main(final String... args) throws Exception {
+        final int cport = Integer.parseInt(args[0]);
+        try (
+            final Cluster cluster = Cluster.builder().withPort(cport).build();
+            final Session session = cluster.connect()
+        ) {
+            final String keyspace = "keyspace";
+            MatcherAssert.assertThat(
+                new Check.KeyspaceExists(session, keyspace).fulfilled(),
+                Matchers.is(false)
+            );
+            new Migration.CreateKeyspace(session, keyspace).run();
+            MatcherAssert.assertThat(
+                new Check.KeyspaceExists(session, keyspace).fulfilled(),
+                Matchers.is(true)
+            );
+            MatcherAssert.assertThat(
+                new Setup(session, keyspace).finished(),
+                Matchers.is(false)
+            );
+        }
+    }
 }

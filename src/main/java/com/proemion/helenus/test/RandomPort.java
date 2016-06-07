@@ -21,56 +21,46 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.proemion.test.cassandra;
 
-import com.datastax.driver.core.Session;
-import java.util.Optional;
+package com.proemion.helenus.test;
+
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.ServerSocket;
 
 /**
- * Check for Cassandra State.
+ * Reserves a random port on the loopback interface.
  * @author Armin Braun (armin.braun@proemion.com)
  * @version $Id$
  * @since 0.1
  */
-public interface Check {
+public final class RandomPort {
 
     /**
-     * Returns true if Cassandra conforms to state.
-     * @return True if Cassandra conforms to state
+     * Ctor.
      */
-    boolean fulfilled();
+    private RandomPort() {
+        //Utility only.
+    }
 
     /**
-     * Check for Existence of a Keyspace in the Schema.
+     * Reserves a random port on the loopback interface.
+     * @return Port
      */
-    final class KeyspaceExists implements Check {
-
-        /**
-         * Cassandra Session.
-         */
-        private final Session session;
-
-        /**
-         * Keyspace to work on.
-         */
-        private final String keyspace;
-
-        /**
-         * Ctor.
-         * @param connection Cassandra session
-         * @param kyspace Keyspace
-         */
-        public KeyspaceExists(final Session connection, final String kyspace) {
-            this.session = connection;
-            this.keyspace = kyspace;
-        }
-
-        @Override
-        public boolean fulfilled() {
-            return Optional.ofNullable(
-                this.session.getCluster().getMetadata()
-                    .getKeyspace(this.keyspace)
-            ).isPresent();
+    @SuppressWarnings("PMD.ProhibitPublicStaticMethods")
+    public static int reserve() {
+        synchronized (RandomPort.class) {
+            try (ServerSocket socket = new ServerSocket()) {
+                socket.setReuseAddress(true);
+                socket.bind(
+                    new InetSocketAddress(InetAddress.getLoopbackAddress(), 0)
+                );
+                return socket.getLocalPort();
+            } catch (final IOException ex) {
+                throw new IllegalStateException(ex);
+            }
         }
     }
+
 }
