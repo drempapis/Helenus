@@ -29,6 +29,7 @@ import java.util.Collection;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import org.mockito.InOrder;
 import org.mockito.Mockito;
 
 /**
@@ -46,13 +47,13 @@ public final class MigrationSetTest {
      */
     @Test
     public void sharesHighestMemberIdentifier() throws Exception {
-        final Collection<Migration> migrations = new ArrayList<>(3);
         final Migration first = Mockito.mock(Migration.class);
         Mockito.when(first.identifier()).thenReturn((long) Tv.FIFTY);
         final Migration second = Mockito.mock(Migration.class);
         Mockito.when(second.identifier()).thenReturn((long) Tv.THOUSAND);
         final Migration third = Mockito.mock(Migration.class);
         Mockito.when(third.identifier()).thenReturn((long) Tv.HUNDRED);
+        final Collection<Migration> migrations = new ArrayList<>(3);
         migrations.add(first);
         migrations.add(second);
         migrations.add(third);
@@ -60,5 +61,28 @@ public final class MigrationSetTest {
             new MigrationSet(migrations).identifier(),
             Matchers.is((long) Tv.THOUSAND)
         );
+    }
+
+    /**
+     * {@link MigrationSet} can run migrations oldest first.
+     * @throws Exception On failure
+     */
+    @Test
+    public void runsOldestToNewest() throws Exception {
+        final Migration first = Mockito.mock(Migration.class);
+        Mockito.when(first.identifier()).thenReturn((long) Tv.FIFTY);
+        final Migration second = Mockito.mock(Migration.class);
+        Mockito.when(second.identifier()).thenReturn((long) Tv.THOUSAND);
+        final Migration third = Mockito.mock(Migration.class);
+        Mockito.when(third.identifier()).thenReturn((long) Tv.HUNDRED);
+        final Collection<Migration> migrations = new ArrayList<>(3);
+        migrations.add(first);
+        migrations.add(second);
+        migrations.add(third);
+        new MigrationSet(migrations).run();
+        final InOrder order = Mockito.inOrder(first, third, second);
+        order.verify(first).run();
+        order.verify(third).run();
+        order.verify(second).run();
     }
 }

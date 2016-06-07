@@ -39,33 +39,34 @@ public final class MigrationSet implements Migration {
     /**
      * Migrations to run.
      */
-    private final List<Migration> migrations;
+    private final List<Migration.OrderedMigration> migrations;
 
     /**
      * Ctor.
      * @param runs Migrations to run
      */
+    @SuppressWarnings(
+        {
+            "PMD.ConstructorOnlyInitializesOrCallOtherConstructors",
+            "PMD.AvoidInstantiatingObjectsInLoops"
+        }
+    )
     public MigrationSet(final Collection<Migration> runs) {
-        this.migrations = new ArrayList<>(runs);
+        this.migrations = new ArrayList<>(runs.size());
+        for (final Migration run : runs) {
+            this.migrations.add(new Migration.OrderedMigration(run));
+        }
+        Collections.sort(this.migrations);
     }
 
     @Override
     public void run() {
-        Collections.sort(
-            this.migrations,
-            (first, second) -> Long.compare(
-                first.identifier(), second.identifier()
-            )
-        );
+        this.migrations.forEach(Migration::run);
     }
 
     @Override
     public long identifier() {
-        long max = 0L;
-        for (final Migration migration : this.migrations) {
-            max = Math.max(migration.identifier(), max);
-        }
-        return max;
+        return this.migrations.get(this.migrations.size() - 1).identifier();
     }
 
     @Override

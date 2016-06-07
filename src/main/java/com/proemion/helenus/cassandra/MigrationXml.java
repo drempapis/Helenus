@@ -25,7 +25,6 @@
 package com.proemion.helenus.cassandra;
 
 import com.jcabi.xml.XML;
-import lombok.EqualsAndHashCode;
 
 /**
  * Migration read from XML file.
@@ -33,7 +32,6 @@ import lombok.EqualsAndHashCode;
  * @version $Id$
  * @since 0.1
  */
-@EqualsAndHashCode
 public final class MigrationXml implements Migration {
 
     /**
