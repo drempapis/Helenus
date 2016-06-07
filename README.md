@@ -31,4 +31,4 @@ $ mvn clean install -Pqulice
 
 ## Integration Tests
 
-* [From Scratch](https://github.com/Proemion/Helenus/blob/master/src/it/from-scratch/README.md)
+* [From Scratch](https://github.com/Proemion/Helenus/blob/master/src/it/from-scratch)
