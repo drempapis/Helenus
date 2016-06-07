@@ -27,6 +27,7 @@ import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.Session;
 import com.proemion.test.cassandra.Check;
 import com.proemion.test.cassandra.Migration;
+import com.proemion.test.cli.Setup;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 
@@ -65,6 +66,10 @@ public final class Main {
             MatcherAssert.assertThat(
                 new Check.KeyspaceExists(session, keyspace).fulfilled(),
                 Matchers.is(true)
+            );
+            MatcherAssert.assertThat(
+                new Setup(session, keyspace).finished(),
+                Matchers.is(false)
             );
         }
     }

@@ -26,7 +26,6 @@ package com.proemion.test.cli;
 
 import com.datastax.driver.core.Session;
 import com.proemion.test.cassandra.Migration;
-import java.util.Optional;
 
 /**
  * Setup Cli Workflow.
@@ -75,8 +74,15 @@ public final class Setup implements Migration {
 
     @Override
     public boolean finished() {
-        return Optional.ofNullable(
-            this.session.getCluster().getMetadata().getKeyspace(this.keyspace)
-        ).isPresent();
+        return this.session.execute(
+            String.join(
+                "",
+                "SELECT helenus_migrations",
+                String.format(
+                    "FROM system_schema.tables WHERE keyspace_name='%s';",
+                    this.keyspace
+                )
+            )
+        ).getAvailableWithoutFetching() == 1;
     }
 }
