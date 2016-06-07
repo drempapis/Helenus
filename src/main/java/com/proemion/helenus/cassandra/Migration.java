@@ -48,7 +48,7 @@ public interface Migration {
 
     /**
      * Is the migration finished?
-     * @return True if migration has finished sucessfully
+     * @return True if migration has finished successfully
      */
     boolean finished();
 

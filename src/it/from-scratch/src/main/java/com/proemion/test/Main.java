@@ -68,10 +68,10 @@ public final class Main {
                 new Check.KeyspaceExists(session, keyspace).fulfilled(),
                 Matchers.is(true)
             );
-            MatcherAssert.assertThat(
-                new Setup(session, keyspace).finished(),
-                Matchers.is(false)
-            );
+            final Setup setup = new Setup(session, keyspace);
+            MatcherAssert.assertThat(setup.finished(), Matchers.is(false));
+            setup.run();
+            MatcherAssert.assertThat(setup.finished(), Matchers.is(true));
         }
     }
 }

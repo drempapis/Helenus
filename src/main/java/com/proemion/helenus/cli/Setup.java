@@ -37,6 +37,11 @@ import com.proemion.helenus.cassandra.Migration;
 public final class Setup implements Migration {
 
     /**
+     * Table Used to Store Migrations.
+     */
+    private static final String TABLE = "helenus_schema_migrations";
+
+    /**
      * Cassandra Session.
      */
     private final Session session;
@@ -68,6 +73,20 @@ public final class Setup implements Migration {
                 )
             );
         }
+        final String type = "type";
+        final String version = "version";
+        this.session.execute(
+            String.format(
+                String.join(
+                    " ", "CREATE TABLE %s.%s",
+                    "(%s text, %s int, ts bigint, description text,",
+                    "PRIMARY KEY (%s, %s)) WITH CLUSTERING ORDER BY",
+                    "(%s DESC);"
+                ),
+                this.keyspace, Setup.TABLE, type, version, type, version,
+                version
+            )
+        );
     }
 
     @Override
@@ -79,7 +98,7 @@ public final class Setup implements Migration {
     public boolean finished() {
         return Optional.fromNullable(
             this.session.getCluster().getMetadata().getKeyspace(this.keyspace)
-                .getTable("helenus_schema_migrations")
+                .getTable(Setup.TABLE)
         ).isPresent();
     }
 }
