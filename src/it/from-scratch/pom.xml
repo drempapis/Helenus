@@ -34,6 +34,11 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <dependency>
+            <groupId>com.datastax.cassandra</groupId>
+            <artifactId>cassandra-driver-core</artifactId>
+            <version>@datastax.version@</version>
+        </dependency>
     </dependencies>
     <profiles>
         <profile>
@@ -47,6 +52,7 @@
                         <configuration>
                             <excludes>
                                 <exclude>duplicatefinder:.*</exclude>
+                                <exclude>xml:.*</exclude>
                             </excludes>
                         </configuration>
                     </plugin>
@@ -56,6 +62,13 @@
     </profiles>
     <build>
         <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <executions>

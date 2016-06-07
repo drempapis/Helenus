@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.proemion.helenus.test;
+package com.proemion.test.test;
 
 import java.io.IOException;
 import java.net.InetAddress;

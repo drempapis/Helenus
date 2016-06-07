@@ -22,10 +22,51 @@
  * SOFTWARE.
  */
 
+package com.proemion.test.cassandra;
+
+import com.datastax.driver.core.Session;
+
 /**
- * Helenus Cassandra Package.
+ * Cassandra Query.
  * @author Armin Braun (armin.braun@proemion.com)
  * @version $Id$
  * @since 0.1
  */
-package com.proemion.helenus.cassandra;
+public interface QueriesCassandra {
+
+    /**
+     * Execute the Query.
+     */
+    void exec();
+
+    /**
+     * Default CQL String Query.
+     */
+    final class Default implements QueriesCassandra {
+
+        /**
+         * Cassandra Session.
+         */
+        private final Session session;
+
+        /**
+         * CQL Query.
+         */
+        private final String query;
+
+        /**
+         * Ctor.
+         * @param sessin Cassandra Session
+         * @param qury CQL Query
+         */
+        Default(final Session sessin, final String qury) {
+            this.session = sessin;
+            this.query = qury;
+        }
+
+        @Override
+        public void exec() {
+            this.session.execute(this.query);
+        }
+    }
+}

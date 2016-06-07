@@ -22,10 +22,46 @@
  * SOFTWARE.
  */
 
+package com.proemion.test.cli;
+
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
 /**
- * Helenus Test Package.
+ * Tests for {@link App}.
  * @author Armin Braun (armin.braun@proemion.com)
  * @version $Id$
  * @since 0.1
  */
-package com.proemion.helenus.test;
+public final class AppTest {
+
+    /**
+     * JUnit rule for expected exception.
+     */
+    @Rule
+    public final transient ExpectedException thrown = ExpectedException.none();
+
+    /**
+     * Main can throw on missing Cassandra host.
+     * @throws Exception On failure
+     */
+    @Test
+    public void mainThrowsOnMissingCassandraHost() throws Exception {
+        this.thrown.expect(IllegalArgumentException.class);
+        this.thrown.expectMessage("Argument cassandra_host missing!");
+        App.main();
+    }
+
+    /**
+     * Main can throw on missing migrations directory.
+     * @throws Exception On failure
+     */
+    @Test
+    public void mainThrowsOnMissingMigrationsDir() throws Exception {
+        this.thrown.expect(IllegalArgumentException.class);
+        this.thrown.expectMessage("Argument migration_package missing!");
+        App.main("--cassandra_host", "somehost");
+    }
+
+}

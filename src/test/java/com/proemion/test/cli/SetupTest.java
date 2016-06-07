@@ -21,52 +21,32 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
-package com.proemion.helenus.cassandra;
+package com.proemion.test.cli;
 
 import com.datastax.driver.core.Session;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
+import org.mockito.Mockito;
 
 /**
- * Cassandra Query.
+ * Tests for {@link Setup}.
  * @author Armin Braun (armin.braun@proemion.com)
  * @version $Id$
  * @since 0.1
  */
-public interface QueriesCassandra {
+public final class SetupTest {
 
     /**
-     * Execute the Query.
+     * {@link Setup} can have identifier 1.
+     * @throws Exception On Failure
      */
-    void exec();
-
-    /**
-     * Default CQL String Query.
-     */
-    final class Default implements QueriesCassandra {
-
-        /**
-         * Cassandra Session.
-         */
-        private final Session session;
-
-        /**
-         * CQL Query.
-         */
-        private final String query;
-
-        /**
-         * Ctor.
-         * @param sessin Cassandra Session
-         * @param qury CQL Query
-         */
-        Default(final Session sessin, final String qury) {
-            this.session = sessin;
-            this.query = qury;
-        }
-
-        @Override
-        public void exec() {
-            this.session.execute(this.query);
-        }
+    @Test
+    public void identifierIsOne() throws Exception {
+        MatcherAssert.assertThat(
+            new Setup(Mockito.mock(Session.class), "ks").identifier(),
+            Matchers.is(1L)
+        );
     }
+
 }

@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.proemion.helenus.cassandra;
+package com.proemion.test.cassandra;
 
 /**
  * A Cassandra Schema Migration.
@@ -30,7 +30,7 @@ package com.proemion.helenus.cassandra;
  * @version $Id$
  * @since 0.1
  */
-public interface Migration extends Comparable<Migration> {
+public interface Migration {
 
     /**
      * Execute the Migration.
@@ -41,5 +41,11 @@ public interface Migration extends Comparable<Migration> {
      * Sortable Identifier for the Migration.
      * @return Sortable Identifier for the Migration
      */
-    Long identifier();
+    long identifier();
+
+    /**
+     * Is the migration finished?
+     * @return True if migration has finished sucessfully
+     */
+    boolean finished();
 }

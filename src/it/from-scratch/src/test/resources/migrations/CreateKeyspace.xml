@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<migration>
+    <identifier>1465204980295</identifier>
+    <type>create-keyspace</type>
+    <params>
+        <param>
+            <name>keyspace</name>
+            <value>from-scratch</value>
+        </param>
+    </params>
+</migration>

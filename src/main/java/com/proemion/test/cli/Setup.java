@@ -21,45 +21,62 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.proemion.helenus.cassandra;
 
-import com.jcabi.xml.XMLDocument;
-import java.io.File;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
+package com.proemion.test.cli;
+
+import com.datastax.driver.core.Session;
+import com.proemion.test.cassandra.Migration;
+import java.util.Optional;
 
 /**
- * Tests for {@link MigrationXml}.
+ * Setup Cli Workflow.
  * @author Armin Braun (armin.braun@proemion.com)
  * @version $Id$
  * @since 0.1
  */
-public final class MigrationXmlTest {
+public final class Setup implements Migration {
 
     /**
-     * {@link MigrationXml} can read identifier from Xml.
-     * @throws Exception On Failure
+     * Cassandra Session.
      */
-    @Test
-    public void identifierIsReadFromXml() throws Exception {
-        MatcherAssert.assertThat(
-            new MigrationXml(
-                new XMLDocument(
-                    new String(
-                        Files.readAllBytes(
-                            new File(
-                                MigrationXmlTest.class
-                                    .getResource("CreateKeyspace.xml").getFile()
-                            ).toPath()
-                        ), StandardCharsets.UTF_8
-                    )
+    private final Session session;
+
+    /**
+     * Keyspace to work on.
+     */
+    private final String keyspace;
+
+    /**
+     * Ctor.
+     * @param connection Cassandra session
+     * @param kyspace Keyspace
+     */
+    public Setup(final Session connection, final String kyspace) {
+        this.session = connection;
+        this.keyspace = kyspace;
+    }
+
+    @Override
+    public void run() {
+        if (this.finished()) {
+            throw new IllegalStateException(
+                String.join(
+                    " ", "Setup on keyspace %s attempted,",
+                    "but %s already contains a migration tracking table!"
                 )
-            ).identifier(),
-            // @checkstyle MagicNumberCheck (1 line)
-            Matchers.is(1465204980295L)
-        );
+            );
+        }
+    }
+
+    @Override
+    public long identifier() {
+        return 1L;
+    }
+
+    @Override
+    public boolean finished() {
+        return Optional.ofNullable(
+            this.session.getCluster().getMetadata().getKeyspace(this.keyspace)
+        ).isPresent();
     }
 }

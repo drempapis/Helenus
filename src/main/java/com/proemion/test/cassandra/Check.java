@@ -21,47 +21,56 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package com.proemion.test.cassandra;
 
-package com.proemion.helenus.cli;
-
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import com.datastax.driver.core.Session;
+import java.util.Optional;
 
 /**
- * Tests for {@link App}.
+ * Check for Cassandra State.
  * @author Armin Braun (armin.braun@proemion.com)
  * @version $Id$
  * @since 0.1
  */
-public final class AppTest {
+public interface Check {
 
     /**
-     * JUnit rule for expected exception.
+     * Returns true if Cassandra conforms to state.
+     * @return True if Cassandra conforms to state
      */
-    @Rule
-    public final transient ExpectedException thrown = ExpectedException.none();
+    boolean fulfilled();
 
     /**
-     * Main can throw on missing Cassandra host.
-     * @throws Exception On failure
+     * Check for Existence of a Keyspace in the Schema.
      */
-    @Test
-    public void mainThrowsOnMissingCassandraHost() throws Exception {
-        this.thrown.expect(IllegalArgumentException.class);
-        this.thrown.expectMessage("Argument cassandra_host missing!");
-        App.main();
+    final class KeyspaceExists implements Check {
+
+        /**
+         * Cassandra Session.
+         */
+        private final Session session;
+
+        /**
+         * Keyspace to work on.
+         */
+        private final String keyspace;
+
+        /**
+         * Ctor.
+         * @param connection Cassandra session
+         * @param kyspace Keyspace
+         */
+        public KeyspaceExists(final Session connection, final String kyspace) {
+            this.session = connection;
+            this.keyspace = kyspace;
+        }
+
+        @Override
+        public boolean fulfilled() {
+            return Optional.ofNullable(
+                this.session.getCluster().getMetadata()
+                    .getKeyspace(this.keyspace)
+            ).isPresent();
+        }
     }
-
-    /**
-     * Main can throw on missing migrations directory.
-     * @throws Exception On failure
-     */
-    @Test
-    public void mainThrowsOnMissingMigrationsDir() throws Exception {
-        this.thrown.expect(IllegalArgumentException.class);
-        this.thrown.expectMessage("Argument migration_package missing!");
-        App.main("--cassandra_host", "somehost");
-    }
-
 }
