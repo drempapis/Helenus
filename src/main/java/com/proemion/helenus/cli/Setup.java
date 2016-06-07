@@ -78,8 +78,7 @@ public final class Setup implements Migration {
         this.session.execute(
             String.format(
                 String.join(
-                    " ", "CREATE TABLE %s.%s",
-                    "(%s text, %s int, ts bigint, description text,",
+                    " ", "CREATE TABLE %s.%s", "(%s text, %s int, ts bigint,",
                     "PRIMARY KEY (%s, %s)) WITH CLUSTERING ORDER BY",
                     "(%s DESC);"
                 ),
