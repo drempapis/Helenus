@@ -38,3 +38,12 @@ $ mvn clean install -Pqulice
 This Project ships with a CLI interface in `com.proemion.helenus.cli.App`,
 which enables the user to run a set of migrations packaged in XML or JAR
 format against a given Cassandra cluster.
+
+## Migrations
+
+### Schema Migrations
+
+### Data Migrations (Not Yet Implemented)
+
+#### Spark
+
