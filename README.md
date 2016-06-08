@@ -41,6 +41,8 @@ This Project ships with a CLI interface in `com.proemion.helenus.cli.App`,
 which enables the user to run a set of migrations packaged in XML or JAR
 format against a given Cassandra cluster.
 
+### Example
+
 ## Migrations
 
 ### Schema Migrations
@@ -50,5 +52,7 @@ format against a given Cassandra cluster.
 #### Spark
 
 ### Revision Handling
+
+## CI Infrastructure
 
 
