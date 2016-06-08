@@ -32,6 +32,8 @@ $ mvn clean install -Pqulice
 ## Integration Tests
 
 * [From Scratch](https://github.com/Proemion/Helenus/blob/master/src/it/from-scratch)
+* [From Scratch Cluster](https://github.com/Proemion/Helenus/blob/master/src/it/from-scratch-cluster)
+* [From Scratch Spark](https://github.com/Proemion/Helenus/blob/master/src/it/from-scratch-spark)
 
 ## CLI Interface (Not Yet Implemented)
 
