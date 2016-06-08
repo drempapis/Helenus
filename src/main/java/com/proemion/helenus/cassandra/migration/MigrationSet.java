@@ -21,33 +21,56 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.proemion.helenus.cli;
+package com.proemion.helenus.cassandra.migration;
 
-import com.datastax.driver.core.Session;
-import com.proemion.helenus.cassandra.migration.Setup;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
-import org.mockito.Mockito;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 /**
- * Tests for {@link Setup}.
+ * Multiple Migrations.
  * @author Armin Braun (armin.braun@proemion.com)
  * @version $Id$
  * @since 0.1
  */
-public final class SetupTest {
+public final class MigrationSet implements Migration {
 
     /**
-     * {@link Setup} can have identifier 1.
-     * @throws Exception On Failure
+     * Migrations to run.
      */
-    @Test
-    public void identifierIsOne() throws Exception {
-        MatcherAssert.assertThat(
-            new Setup(Mockito.mock(Session.class), "ks").identifier(),
-            Matchers.is(1L)
-        );
+    private final List<Migration.OrderedMigration> migrations;
+
+    /**
+     * Ctor.
+     * @param runs Migrations to run
+     */
+    @SuppressWarnings(
+        {
+            "PMD.ConstructorOnlyInitializesOrCallOtherConstructors",
+            "PMD.AvoidInstantiatingObjectsInLoops"
+        }
+    )
+    public MigrationSet(final Collection<Migration> runs) {
+        this.migrations = new ArrayList<>(runs.size());
+        for (final Migration run : runs) {
+            this.migrations.add(new Migration.OrderedMigration(run));
+        }
+        Collections.sort(this.migrations);
     }
 
+    @Override
+    public void run() {
+        this.migrations.forEach(Migration::run);
+    }
+
+    @Override
+    public long identifier() {
+        return this.migrations.get(this.migrations.size() - 1).identifier();
+    }
+
+    @Override
+    public boolean finished() {
+        return this.migrations.get(this.migrations.size() - 1).finished();
+    }
 }

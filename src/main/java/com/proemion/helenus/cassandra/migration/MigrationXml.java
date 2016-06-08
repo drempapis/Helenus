@@ -21,56 +21,46 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.proemion.helenus.cassandra;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+package com.proemion.helenus.cassandra.migration;
+
+import com.jcabi.xml.XML;
 
 /**
- * Multiple Migrations.
+ * Migration read from XML file.
  * @author Armin Braun (armin.braun@proemion.com)
  * @version $Id$
  * @since 0.1
  */
-public final class MigrationSet implements Migration {
+public final class MigrationXml implements Migration {
 
     /**
-     * Migrations to run.
+     * Xml from which to read.
      */
-    private final List<Migration.OrderedMigration> migrations;
+    private final XML data;
 
     /**
      * Ctor.
-     * @param runs Migrations to run
+     * @param xml Xml to read
      */
-    @SuppressWarnings(
-        {
-            "PMD.ConstructorOnlyInitializesOrCallOtherConstructors",
-            "PMD.AvoidInstantiatingObjectsInLoops"
-        }
-    )
-    public MigrationSet(final Collection<Migration> runs) {
-        this.migrations = new ArrayList<>(runs.size());
-        for (final Migration run : runs) {
-            this.migrations.add(new Migration.OrderedMigration(run));
-        }
-        Collections.sort(this.migrations);
+    public MigrationXml(final XML xml) {
+        this.data = xml;
     }
 
     @Override
     public void run() {
-        this.migrations.forEach(Migration::run);
+        //missing implementation.
     }
 
     @Override
     public long identifier() {
-        return this.migrations.get(this.migrations.size() - 1).identifier();
+        return Long.parseLong(
+            this.data.xpath("/migration/identifier/text()").iterator().next()
+        );
     }
 
     @Override
     public boolean finished() {
-        return this.migrations.get(this.migrations.size() - 1).finished();
+        return false;
     }
 }

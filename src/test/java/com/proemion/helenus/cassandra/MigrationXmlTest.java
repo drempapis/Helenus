@@ -24,6 +24,7 @@
 package com.proemion.helenus.cassandra;
 
 import com.jcabi.xml.XMLDocument;
+import com.proemion.helenus.cassandra.migration.MigrationXml;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;

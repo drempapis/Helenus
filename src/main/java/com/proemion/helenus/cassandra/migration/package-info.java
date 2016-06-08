@@ -21,56 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.proemion.helenus.cassandra;
-
-import com.datastax.driver.core.Session;
-import java.util.Optional;
 
 /**
- * Check for Cassandra State.
+ * Helenus Cassandra Migrations Package.
  * @author Armin Braun (armin.braun@proemion.com)
  * @version $Id$
  * @since 0.1
  */
-public interface Check {
-
-    /**
-     * Returns true if Cassandra conforms to state.
-     * @return True if Cassandra conforms to state
-     */
-    boolean fulfilled();
-
-    /**
-     * Check for Existence of a Keyspace in the Schema.
-     */
-    final class KeyspaceExists implements Check {
-
-        /**
-         * Cassandra Session.
-         */
-        private final Session session;
-
-        /**
-         * Keyspace to work on.
-         */
-        private final String keyspace;
-
-        /**
-         * Ctor.
-         * @param connection Cassandra session
-         * @param kyspace Keyspace
-         */
-        public KeyspaceExists(final Session connection, final String kyspace) {
-            this.session = connection;
-            this.keyspace = kyspace;
-        }
-
-        @Override
-        public boolean fulfilled() {
-            return Optional.ofNullable(
-                this.session.getCluster().getMetadata()
-                    .getKeyspace(this.keyspace)
-            ).isPresent();
-        }
-    }
-}
+package com.proemion.helenus.cassandra.migration;

@@ -21,46 +21,56 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+package com.proemion.helenus.cassandra.migration;
 
-package com.proemion.helenus.cassandra;
-
-import com.jcabi.xml.XML;
+import com.datastax.driver.core.Session;
+import java.util.Optional;
 
 /**
- * Migration read from XML file.
+ * Check for Cassandra State.
  * @author Armin Braun (armin.braun@proemion.com)
  * @version $Id$
  * @since 0.1
  */
-public final class MigrationXml implements Migration {
+public interface Check {
 
     /**
-     * Xml from which to read.
+     * Returns true if Cassandra conforms to state.
+     * @return True if Cassandra conforms to state
      */
-    private final XML data;
+    boolean fulfilled();
 
     /**
-     * Ctor.
-     * @param xml Xml to read
+     * Check for Existence of a Keyspace in the Schema.
      */
-    public MigrationXml(final XML xml) {
-        this.data = xml;
-    }
+    final class KeyspaceExists implements Check {
 
-    @Override
-    public void run() {
-        //missing implementation.
-    }
+        /**
+         * Cassandra Session.
+         */
+        private final Session session;
 
-    @Override
-    public long identifier() {
-        return Long.parseLong(
-            this.data.xpath("/migration/identifier/text()").iterator().next()
-        );
-    }
+        /**
+         * Keyspace to work on.
+         */
+        private final String keyspace;
 
-    @Override
-    public boolean finished() {
-        return false;
+        /**
+         * Ctor.
+         * @param connection Cassandra session
+         * @param kyspace Keyspace
+         */
+        public KeyspaceExists(final Session connection, final String kyspace) {
+            this.session = connection;
+            this.keyspace = kyspace;
+        }
+
+        @Override
+        public boolean fulfilled() {
+            return Optional.ofNullable(
+                this.session.getCluster().getMetadata()
+                    .getKeyspace(this.keyspace)
+            ).isPresent();
+        }
     }
 }

@@ -24,6 +24,8 @@
 package com.proemion.helenus.cassandra;
 
 import com.jcabi.aspects.Tv;
+import com.proemion.helenus.cassandra.migration.Migration;
+import com.proemion.helenus.cassandra.migration.MigrationSet;
 import java.util.ArrayList;
 import java.util.Collection;
 import org.hamcrest.MatcherAssert;

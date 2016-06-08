@@ -24,7 +24,7 @@
 
 package com.proemion.helenus.cassandra.revisions;
 
-import com.proemion.helenus.cassandra.Migration;
+import com.proemion.helenus.cassandra.migration.Migration;
 
 /**
  * Cassandra Schema Version.

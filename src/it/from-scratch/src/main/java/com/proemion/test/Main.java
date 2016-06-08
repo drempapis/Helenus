@@ -25,9 +25,9 @@ package com.proemion.test;
 
 import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.Session;
-import com.proemion.helenus.cassandra.Check;
-import com.proemion.helenus.cassandra.Migration;
-import com.proemion.helenus.cli.Setup;
+import com.proemion.helenus.cassandra.migration.Check;
+import com.proemion.helenus.cassandra.migration.Migration;
+import com.proemion.helenus.cassandra.migration.Setup;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 

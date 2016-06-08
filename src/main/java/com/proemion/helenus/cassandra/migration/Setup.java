@@ -22,11 +22,10 @@
  * SOFTWARE.
  */
 
-package com.proemion.helenus.cli;
+package com.proemion.helenus.cassandra.migration;
 
 import com.datastax.driver.core.Session;
 import com.google.common.base.Optional;
-import com.proemion.helenus.cassandra.Migration;
 
 /**
  * Setup Helenus on a Keyspace.
