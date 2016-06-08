@@ -1,6 +1,6 @@
 # "From Scratch Cluster" Integration Test
 
-This test runs the following commands and verifies their result 
+This test runs the following commands and verifies their result
 against a 3 node Cassandra Cluster:
 
 1. Check that if the test keyspace exists
