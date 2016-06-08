@@ -57,12 +57,12 @@ Revision information is stored in the Cassandra database itself.
 In order to do so, a keyspace in which the revision tracking table
 can be created and maintained needs to be provided to Helenus.
 ```
-+--------------+--------------+-------------+
-|  type(text)  | version(int) | ts(bigint)  |
-+--------------+--------------+-------------+
-| Setup        |            1 |  1465393342 |
-| Create Table |            2 |  1465393361 |
-+--------------+--------------+-------------+
++--------------+--------------+-------------+-------------------+
+|  type(text)  | version(int) | ts(bigint)  |   Migration(blob) |
++--------------+--------------+-------------+-------------------+
+| Setup        |            1 |  1465393342 |  binary           |
+| Create Table |            2 |  1465393361 |  binary           |
++--------------+--------------+-------------+-------------------+
 ```
 
 ## CI Infrastructure
