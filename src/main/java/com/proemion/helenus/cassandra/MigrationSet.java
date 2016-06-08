@@ -71,6 +71,6 @@ public final class MigrationSet implements Migration {
 
     @Override
     public boolean finished() {
-        return false;
+        return this.migrations.get(this.migrations.size() - 1).finished();
     }
 }
