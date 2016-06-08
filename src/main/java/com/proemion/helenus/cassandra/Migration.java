@@ -26,6 +26,7 @@ package com.proemion.helenus.cassandra;
 
 import com.datastax.driver.core.Session;
 import java.util.Date;
+import lombok.EqualsAndHashCode;
 
 /**
  * A Cassandra Schema Migration.
@@ -51,6 +52,47 @@ public interface Migration {
      * @return True if migration has finished successfully
      */
     boolean finished();
+
+    /**
+     * Migration Decorator with Ordering.
+     */
+    @EqualsAndHashCode
+    final class OrderedMigration implements Migration, Comparable<Migration> {
+
+        /**
+         * Wrapped Migration.
+         */
+        private final Migration migration;
+
+        /**
+         * Ctor.
+         * @param migra Migration
+         */
+        public OrderedMigration(final Migration migra) {
+            this.migration = migra;
+        }
+
+        @Override
+        public int compareTo(final Migration other) {
+            return Long
+                .compare(this.migration.identifier(), other.identifier());
+        }
+
+        @Override
+        public void run() {
+            this.migration.run();
+        }
+
+        @Override
+        public long identifier() {
+            return this.migration.identifier();
+        }
+
+        @Override
+        public boolean finished() {
+            return this.migration.finished();
+        }
+    }
 
     /**
      * Creates a Keyspace.
