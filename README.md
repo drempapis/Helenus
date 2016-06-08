@@ -32,3 +32,9 @@ $ mvn clean install -Pqulice
 ## Integration Tests
 
 * [From Scratch](https://github.com/Proemion/Helenus/blob/master/src/it/from-scratch)
+
+## CLI Interface (Not Yet Implemented)
+
+This Project ships with a CLI interface in `com.proemion.helenus.cli.App`,
+which enables the user to run a set of migrations packaged in XML or JAR
+format against a given Cassandra cluster.
