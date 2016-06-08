@@ -29,7 +29,7 @@ import com.google.common.base.Optional;
 import com.proemion.helenus.cassandra.Migration;
 
 /**
- * Setup Cli Workflow.
+ * Setup Helenus on a Keyspace.
  * @author Armin Braun (armin.braun@proemion.com)
  * @version $Id$
  * @since 0.1
