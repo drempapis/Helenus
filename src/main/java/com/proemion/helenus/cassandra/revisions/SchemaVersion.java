@@ -36,7 +36,7 @@ public interface SchemaVersion {
 
     /**
      * Returns the version identifier.
-     * @return version identifier
+     * @return Version identifier
      */
     long version();
 
