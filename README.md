@@ -53,6 +53,20 @@ format against a given Cassandra cluster.
 
 ### Revision Handling
 
+Revision information is stored in the Cassandra database itself.
+In order to do so, a keyspace in which the revision tracking table
+can be created and maintained needs to be provided to Helenus.
+```
++--------------+--------------+-------------+
+|  type(text)  | version(int) | ts(bigint)  |
++--------------+--------------+-------------+
+| Setup        |            1 |  1465393342 |
+| Create Table |            2 |  1465393361 |
++--------------+--------------+-------------+
+```
+
 ## CI Infrastructure
 
-
+Currently only Travis is used to build the project on Oracle Jdk8.
+The build should run on both a Linux and OSX setup, to ensure portability
+for developers.
