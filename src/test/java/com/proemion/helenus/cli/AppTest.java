@@ -49,7 +49,7 @@ public final class AppTest {
     @Test
     public void mainThrowsOnMissingCassandraHost() throws Exception {
         this.thrown.expect(IllegalArgumentException.class);
-        this.thrown.expectMessage("Argument cassandra_host missing!");
+        this.thrown.expectMessage("Argument --cassandra_host missing!");
         App.main();
     }
 
@@ -60,7 +60,7 @@ public final class AppTest {
     @Test
     public void mainThrowsOnMissingMigrationsDir() throws Exception {
         this.thrown.expect(IllegalArgumentException.class);
-        this.thrown.expectMessage("Argument migration_class missing!");
+        this.thrown.expectMessage("Argument --jar missing!");
         App.main("--cassandra_host", "somehost");
     }
 

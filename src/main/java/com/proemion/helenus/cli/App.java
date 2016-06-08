@@ -46,19 +46,13 @@ public final class App {
     /**
      * Migrations Directory Cli Argument.
      */
-    private static final String MIGRATIONS = "migration_class";
-
-    /**
-     * Migrations Directory Cli Argument.
-     */
     private static final String JAR = "jar";
 
     /**
      * Cli Option Definitions.
      */
-    private static final Options OPTIONS = new Options()
+    private static final Options OPTIONS_RUN = new Options()
         .addOption("c", App.CASSANDRA, true, "Cassandra Host")
-        .addOption("m", App.MIGRATIONS, true, "Migration Runner Class")
         .addOption("j", App.JAR, true, "Migrations Jar");
 
     /**
@@ -72,7 +66,7 @@ public final class App {
      * @throws ParseException On failure
      */
     private App(final String... args) throws ParseException {
-        this.cli = new DefaultParser().parse(App.OPTIONS, args);
+        this.cli = new DefaultParser().parse(App.OPTIONS_RUN, args);
     }
 
     /**
@@ -89,10 +83,10 @@ public final class App {
      */
     private void exec() {
         if (this.cli.hasOption(App.CASSANDRA)) {
-            if (this.cli.hasOption(App.MIGRATIONS)) {
+            if (this.cli.hasOption(App.JAR)) {
                 Logger.info(App.class, "Not Implemented.");
             } else {
-                throw App.missing(App.MIGRATIONS);
+                throw App.missing(App.JAR);
             }
         } else {
             throw App.missing(App.CASSANDRA);
@@ -106,7 +100,7 @@ public final class App {
      */
     private static IllegalArgumentException missing(final String arg) {
         return new IllegalArgumentException(
-            String.format("Argument %s missing!", arg)
+            String.format("Argument --%s missing!", arg)
         );
     }
 }
