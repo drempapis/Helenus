@@ -85,4 +85,27 @@ public final class MigrationSetTest {
         order.verify(third).run();
         order.verify(second).run();
     }
+
+    /**
+     * {@link MigrationSet} can identify as finished if its highest identifier
+     * (newest) member is finished.
+     * @throws Exception On failure
+     */
+    @Test
+    public void sharesHighestMemberFinished() throws Exception {
+        final Migration first = Mockito.mock(Migration.class);
+        Mockito.when(first.identifier()).thenReturn((long) Tv.FIFTY);
+        final Migration second = Mockito.mock(Migration.class);
+        Mockito.when(second.identifier()).thenReturn((long) Tv.THOUSAND);
+        Mockito.when(second.finished()).thenReturn(true);
+        final Migration third = Mockito.mock(Migration.class);
+        Mockito.when(third.identifier()).thenReturn((long) Tv.HUNDRED);
+        final Collection<Migration> migrations = new ArrayList<>(3);
+        migrations.add(first);
+        migrations.add(second);
+        migrations.add(third);
+        MatcherAssert.assertThat(
+            new MigrationSet(migrations).finished(), Matchers.is(true)
+        );
+    }
 }
