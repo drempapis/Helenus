@@ -52,15 +52,22 @@ Generates the scaffold for a Migration.
 
 ##### Usage:
 
-`java -jar helenus.jar generate`
+`java -jar helenus.jar generate --type=cql`
+
+Arguments:
+
+* `--type`, `-t` possible values:
+  * `cql` cql command scaffold
+  * `spark` spark job scaffold
 
 #### Status (Not Implemented yet)
 
-Displays the current status of the 
+Displays the current status of the Cassandra Schema relative to the
+migrations given.
 
 ##### Usage:
 
-`java -jar helenus.jar status --cassandra=172.17.0.15:4455`
+`java -jar helenus.jar status --cassandra=172.17.0.15:4455 [--jar=migrations.jar]`
 
 Arguments:
 
@@ -70,22 +77,23 @@ Arguments:
 
 ##### Usage:
 
-`java -jar helenus.jar run --cassandra=172.17.0.15:4455`
+`java -jar helenus.jar run --cassandra=172.17.0.15:4455 [--jar=migrations.jar]`
 
 Arguments:
 
 * `--cassandra`, `-c` (mandatory) Cassandra Host
-* `--jar`, `-j` (mandatory) Jar Containing the Migrations
+* `--jar`, `-j` (optional) Jar Containing the Migrations
 
 #### Install (Not Implemented yet)
 
 ##### Usage:
 
-`java -jar helenus.jar install --cassandra=172.17.0.15:4455`
+`java -jar helenus.jar install --cassandra=172.17.0.15:4455 --keyspace`
 
 Arguments:
 
 * `--cassandra`, `-c` (mandatory) Cassandra Host
+* `--keyspace`, `-k` (mandatory) Cassandra Keyspace to install into, will be generated if missing
 
 ### Examples
 
