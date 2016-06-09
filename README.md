@@ -22,8 +22,9 @@ storage, other than Cassandra itself.
 ## CLI Interface (Not Yet Implemented)
 
 This Project ships with a CLI interface in `com.proemion.helenus.cli.App`,
-which enables the user to run a set of migrations packaged in XML or JAR
-format against a given Cassandra cluster.
+which enables the user to run a set of migrations packaged in 
+XML (not yet scheduled for implementation) or JAR format against a given 
+Cassandra cluster.
 
 ### Commands
 
