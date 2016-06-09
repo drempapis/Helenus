@@ -70,7 +70,7 @@ Note: `--jar` and `--keyspace` are mutually exclusive
 Arguments:
 
 * `--cassandra`, `-c` (mandatory) Cassandra Host
-* `--jar`, `-j` (optional) Jar Containing the Migrations
+* `--jar`, `-j` (mandatory) Jar Containing the Migrations
 
 #### Install (Not Implemented yet)
 
