@@ -41,7 +41,53 @@ This Project ships with a CLI interface in `com.proemion.helenus.cli.App`,
 which enables the user to run a set of migrations packaged in XML or JAR
 format against a given Cassandra cluster.
 
-### Example
+### Commands
+
+The Cli interface offers 4 commands, designed in analogy to the RoR
+migration interface.
+
+#### Generate (Not Implemented yet)
+
+Generates the scaffold for a Migration.
+
+##### Usage:
+
+`java -jar helenus.jar generate`
+
+#### Status (Not Implemented yet)
+
+Displays the current status of the 
+
+##### Usage:
+
+`java -jar helenus.jar status --cassandra=172.17.0.15:4455`
+
+Arguments:
+
+* `--cassandra`, `-c` (mandatory) Cassandra Host
+
+#### Run (Not Implemented yet)
+
+##### Usage:
+
+`java -jar helenus.jar run --cassandra=172.17.0.15:4455`
+
+Arguments:
+
+* `--cassandra`, `-c` (mandatory) Cassandra Host
+* `--jar`, `-j` (mandatory) Jar Containing the Migrations
+
+#### Install (Not Implemented yet)
+
+##### Usage:
+
+`java -jar helenus.jar install --cassandra=172.17.0.15:4455`
+
+Arguments:
+
+* `--cassandra`, `-c` (mandatory) Cassandra Host
+
+### Examples
 
 ## Migrations
 
@@ -57,12 +103,12 @@ Revision information is stored in the Cassandra database itself.
 In order to do so, a keyspace in which the revision tracking table
 can be created and maintained needs to be provided to Helenus.
 ```
-+--------------+--------------+-------------+-------------------+
-|  type(text)  | version(int) | ts(bigint)  |   Migration(blob) |
-+--------------+--------------+-------------+-------------------+
-| Setup        |            1 |  1465393342 |  binary           |
-| Create Table |            2 |  1465393361 |  binary           |
-+--------------+--------------+-------------+-------------------+
++--------------+--------------+-------------+
+|  type(text)  | version(int) | ts(bigint)  |
++--------------+--------------+-------------+
+| Setup        |            1 |  1465393342 |
+| Create Table |            2 |  1465393361 |
++--------------+--------------+-------------+
 ```
 
 ## CI Infrastructure
