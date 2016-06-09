@@ -43,8 +43,8 @@ format against a given Cassandra cluster.
 
 ### Commands
 
-The Cli interface offers 4 commands, designed in analogy to the RoR
-migration interface.
+The Cli interface offers 4 commands, designed in analogy to the 
+[RoR migration interface](http://edgeguides.rubyonrails.org/active_record_migrations.html).
 
 #### Generate (Not Implemented yet)
 
