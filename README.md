@@ -13,22 +13,6 @@ functionality.
 Unlike other solutions it has no outside dependency on any RDBMS or other persistent
 storage, other than Cassandra itself.
 
-## How to Contribute
-
-Pull requests are welcome, to avoid disappointment though, please make sure
-the build passes locally for the branch you wish to merge.
-
-Officially only Oracle JDK 8 is supported by this tool, since the same requirement stands
-for recent versions of Apache Cassandra.
-Moreover Maven version `3.3.9` is the only officially supported Maven version for
-this build, though older versions will likely work down to Maven `3.2.x`.
-
-The build itself can be run via:
-
-```sh
-$ mvn clean install -Pqulice
-```
-
 ## Integration Tests
 
 * [From Scratch](https://github.com/Proemion/Helenus/blob/master/src/it/from-scratch)
@@ -121,6 +105,23 @@ can be created and maintained needs to be provided to Helenus.
 | Setup        |            1 |  1465393342 |
 | Create Table |            2 |  1465393361 |
 +--------------+--------------+-------------+
+```
+
+## How to Contribute
+
+Pull requests are very welcome and will be addressed within hours in most cases.
+To avoid disappointment though, please make sure the build passes for you
+locally for the branch you wish to merge.
+
+Officially only Oracle JDK 8 is supported by this tool, since the same requirement stands
+for recent versions of Apache Cassandra.
+Moreover Maven version `3.3.9` is the only officially supported Maven version for
+this build, though older versions will likely work down to Maven `3.2.x`.
+
+The build itself can be run via:
+
+```sh
+$ mvn clean install -Pqulice
 ```
 
 ## CI Infrastructure
