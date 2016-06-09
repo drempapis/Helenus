@@ -63,7 +63,7 @@ Arguments:
 #### Status (Not Implemented yet)
 
 Displays the current status of the Cassandra Schema relative to the
-migrations given.
+migrations given or lists information about migrations in a given keyspace.
 
 ##### Usage:
 
@@ -72,6 +72,10 @@ migrations given.
 Arguments:
 
 * `--cassandra`, `-c` (mandatory) Cassandra Host
+* `--jar`, `-j` (optional) Jar Containing the Migrations
+* `--keyspace`, `-k` (optional) Keyspace to analyze if no jar given
+
+Note: `--jar` and `--keyspace` are mutually exclusive
 
 #### Run (Not Implemented yet)
 
@@ -88,7 +92,7 @@ Arguments:
 
 ##### Usage:
 
-`java -jar helenus.jar install --cassandra=172.17.0.15:4455 --keyspace`
+`java -jar helenus.jar install --cassandra=172.17.0.15:4455 --keyspace=somespace`
 
 Arguments:
 
