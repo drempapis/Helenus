@@ -30,6 +30,7 @@
         <exec-maven-plugin.version>1.5.0</exec-maven-plugin.version>
         <maven-shade-plugin.version>2.4.3</maven-shade-plugin.version>
         <datastax.version>3.0.2</datastax.version>
+        <jacoco.version>0.7.7.201606060606</jacoco.version>
     </properties>
     <organization>
         <name>Proemion GmbH</name>
@@ -208,7 +209,7 @@
                                 <plugin>
                                     <groupId>org.jacoco</groupId>
                                     <artifactId>jacoco-maven-plugin</artifactId>
-                                    <version>0.7.6.201602180812</version>
+                                    <version>${jacoco.version}</version>
                                 </plugin>
                                 <plugin>
                                     <groupId>org.apache.maven.plugins</groupId>
@@ -376,7 +377,7 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.7.6.201602180812</version>
+                <version>${jacoco.version}</version>
                 <executions>
                     <execution>
                         <id>default-prepare-agent</id>
